@@ -1,7 +1,8 @@
 package com.hopebaytech.teraservice.info;
 
 /**
- * Created by nana on 2016/9/6.
+ * @author Vince
+ *      Created by Vince on 2016/9/5.
  */
 public class TeraIntent {
 

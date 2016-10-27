@@ -8,7 +8,7 @@ import com.hopebaytech.teraservice.service.TeraApiServer;
 
 /**
  * @author Vince
- *      Created by nana on 2016/9/5.
+ *      Created by Vince on 2016/9/5.
  */
 public class TeraReceiver extends BroadcastReceiver {
     @Override
