@@ -14,4 +14,6 @@ public class HCFSEvent {
     // The following event is not implemented.
     public static final int EXCEED_PIN_MAX = 5;
     public static final int SPACE_NOT_ENOUGH = 6;
+
+    public static final int CREATE_THUMBNAIL = 7;
 }

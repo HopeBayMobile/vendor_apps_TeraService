@@ -11,6 +11,7 @@ import android.util.Log;
 import com.hopebaytech.teraservice.info.HCFSEvent;
 import com.hopebaytech.teraservice.info.TeraIntent;
 import com.hopebaytech.teraservice.utils.Logs;
+import com.hopebaytech.teraservice.utils.ThumbnailApiUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,14 +26,14 @@ import java.util.concurrent.Executors;
 
 /**
  * @author Vince
- *      Created by nana on 2016/9/5.
+ *      Created by Vince on 2016/9/5.
  */
 public class TeraApiServer extends Service {
 
     private final String CLASSNAME = getClass().getSimpleName();
     public static String SOCKET_ADDRESS = "mgmt.api.sock";
     private boolean stopped = false;
-    private ExecutorService pool = Executors.newFixedThreadPool(3);
+    private ExecutorService pool = Executors.newFixedThreadPool(5);
 
     @Override
     public void onCreate() {
@@ -138,6 +139,9 @@ public class TeraApiServer extends Service {
                         case HCFSEvent.EXCEED_PIN_MAX:
                             notifyUserExceedPinMax();
                             break;
+                        case HCFSEvent.CREATE_THUMBNAIL:
+                            new ThumbnailApiUtils().createThumbnailImages(TeraApiServer.this.getApplicationContext(), jsonObj);
+                            break;
                     }
                 }
             } catch (Exception e) {
@@ -148,19 +152,19 @@ public class TeraApiServer extends Service {
         private void notifyUserExceedPinMax() {
             Intent intent = new Intent();
             intent.setAction(TeraIntent.ACTION_EXCEED_PIN_MAX);
-            sendBroadcastAsUser(intent, UserHandle.ALL);  
+            sendBroadcastAsUser(intent, UserHandle.ALL);
         }
 
         private void checkTokenExpiredCause() {
             Intent intent = new Intent();
             intent.setAction(TeraIntent.ACTION_TOKEN_EXPIRED);
-            sendBroadcastAsUser(intent, UserHandle.ALL);  
+            sendBroadcastAsUser(intent, UserHandle.ALL);
         }
 
         private void sendUploadCompletedIntent() {
             Intent intent = new Intent();
             intent.setAction(TeraIntent.ACTION_UPLOAD_COMPLETED);
-            sendBroadcastAsUser(intent, UserHandle.ALL);  
+            sendBroadcastAsUser(intent, UserHandle.ALL);
         }
 
         private void sendRestoreStage1Intent(JSONObject jsonObj) {
@@ -176,7 +180,7 @@ public class TeraApiServer extends Service {
             if (errorCode != -1) {
                 intent.putExtra(TeraIntent.KEY_RESTORE_ERROR_CODE, errorCode);
             }
-            sendBroadcastAsUser(intent, UserHandle.ALL);  
+            sendBroadcastAsUser(intent, UserHandle.ALL);
         }
 
         private void sendRestoreStage2Intent(JSONObject jsonObj) {
@@ -192,7 +196,7 @@ public class TeraApiServer extends Service {
             if (errorCode != -1) {
                 intent.putExtra(TeraIntent.KEY_RESTORE_ERROR_CODE, errorCode);
             }
-            sendBroadcastAsUser(intent, UserHandle.ALL);  
+            sendBroadcastAsUser(intent, UserHandle.ALL);
         }
     }
 
