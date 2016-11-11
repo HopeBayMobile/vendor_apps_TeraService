@@ -70,7 +70,7 @@ public class ThumbnailApiUtils {
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-                thumbnail = MediaStore.Images.Thumbnails.getThumbnail(cr, id, MediaStore.Images.Thumbnails.MINI_KIND, null);
+                thumbnail = MediaStore.Images.Thumbnails.getThumbnail(cr, id, MediaStore.Images.Thumbnails.MICRO_KIND, null);
             } else {
                 Logs.e(CLASSNAME, "getImageThumbnail", "cursor.moveToFirst = false");
             }
@@ -89,7 +89,7 @@ public class ThumbnailApiUtils {
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-                thumbnail = MediaStore.Video.Thumbnails.getThumbnail(cr, id, MediaStore.Video.Thumbnails.MINI_KIND, null);
+                thumbnail = MediaStore.Video.Thumbnails.getThumbnail(cr, id, MediaStore.Video.Thumbnails.MICRO_KIND, null);
             }
             cursor.close();
         } else {
