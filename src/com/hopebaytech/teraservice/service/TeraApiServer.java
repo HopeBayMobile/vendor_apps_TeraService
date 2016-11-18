@@ -143,10 +143,10 @@ public class TeraApiServer extends Service {
                         case HCFSEvent.CREATE_THUMBNAIL:
                             new ThumbnailApiUtils().createThumbnailImages(TeraApiServer.this.getApplicationContext(), jsonObj);
                             break;
-                        case HCFSevent.BOOSTER_PROCESS_COMPLETED:
+                        case HCFSEvent.BOOSTER_PROCESS_COMPLETED:
                             sendBoosterProcessCompletedIntent();
                             break;
-                        case HCFSevent.BOOSTER_PROCESS_FAILED:
+                        case HCFSEvent.BOOSTER_PROCESS_FAILED:
                             sendBoosterProcessFailedIntent();
                             break;
 
