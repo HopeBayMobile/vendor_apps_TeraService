@@ -1,0 +1,39 @@
+# Project-specific files
+*.apk
+/app/src/main/libs
+/app/src/main/obj
+/app/app.iml
+app/app.iml
+
+# Built application files
+/build
+/*/build/
+/export_props.properties
+/.root.gradle/
+
+# Crashlytics configuations
+com_crashlytics_export_strings.xml
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Gradle generated files
+.gradle/
+
+# Signing files
+.signing/
+
+# User-specific configurations
+.idea/
+.idea/misc.xml
+*.iml
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~

@@ -136,12 +136,20 @@ public class TeraApiServer extends Service {
                             break;
                         case HCFSEvent.RESTORE_STAGE_2:
                             sendRestoreStage2Intent(jsonObj);
+                            break;
                         case HCFSEvent.EXCEED_PIN_MAX:
                             notifyUserExceedPinMax();
                             break;
                         case HCFSEvent.CREATE_THUMBNAIL:
                             new ThumbnailApiUtils().createThumbnailImages(TeraApiServer.this.getApplicationContext(), jsonObj);
                             break;
+                        case HCFSevent.BOOSTER_PROCESS_COMPLETED:
+                            sendBoosterProcessCompletedIntent();
+                            break;
+                        case HCFSevent.BOOSTER_PROCESS_FAILED:
+                            sendBoosterProcessFailedIntent();
+                            break;
+
                     }
                 }
             } catch (Exception e) {
@@ -198,6 +206,19 @@ public class TeraApiServer extends Service {
             }
             sendBroadcastAsUser(intent, UserHandle.ALL);
         }
+
+        private void sendBoosterProcessCompletedIntent() {
+            Intent intent = new Intent();
+            intent.setAction(TeraIntent.ACTION_BOOSTER_PROCESS_COMPLETED);
+            sendBroadcastAsUser(intent, UserHandle.ALL);
+        }
+
+        private void sendBoosterProcessFailedIntent() {
+            Intent intent = new Intent();
+            intent.setAction(TeraIntent.ACTION_BOOSTER_PROCESS_FAILED);
+            sendBroadcastAsUser(intent, UserHandle.ALL);
+        }
+
     }
 
 }
