@@ -26,12 +26,15 @@ public class ThumbnailApiUtils {
         this.mContext =  mContext;
         try {
             Logs.i(CLASSNAME, "createThumbnailImages", jsonObj.toString());
-            Logs.i(CLASSNAME, "createThumbnailImages", "file path: " + jsonObj.getString("file_path"));
-            Logs.i(CLASSNAME, "createThumbnailImages", "thumbnail type: " + String.valueOf(jsonObj.getInt("thumbnail_type")));
 
             int thumbnailType = jsonObj.getInt("thumbnail_type");
-            //storage/emulated/0/<file name>
             String filePath = jsonObj.getString("file_path");
+            // skip thumbnails
+            if (filePath.matches("^/mnt/runtime/.*/emulated/.*/DCIM/.thumbnails/.*"))
+                return;
+            // replace /mnt/runtime/.*/emulated path to /storage/emulated
+            // to search image id in media db
+            filePath = filePath.replaceFirst("^/mnt/runtime/.*/emulated", "/storage/emulated");
             switch (thumbnailType) {
                 case image:
                     for (int i = 0; i < retry; i++) {
