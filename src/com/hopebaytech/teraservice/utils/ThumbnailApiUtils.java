@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 
+import com.hopebaytech.teraservice.service.TeraApiServer;
+
 import org.json.JSONObject;
 
 /**
@@ -63,6 +65,18 @@ public class ThumbnailApiUtils {
         } catch (Exception e) {
             Logs.e(CLASSNAME, "createThumbnailImages", e.toString());
         }
+    }
+
+    public Bitmap getThumbnail(Context context, long id, int type) {
+        Bitmap thumbnail = null;
+        ContentResolver cr = context.getContentResolver();
+        Logs.d(CLASSNAME, "getThumbnail", String.valueOf(id)+  " " +String.valueOf(type));
+        if (type == TeraApiServer.image) {
+            thumbnail = MediaStore.Images.Thumbnails.getThumbnail(cr, id, MediaStore.Images.Thumbnails.MINI_KIND, null);
+        } else if(type == TeraApiServer.video) {
+            thumbnail = MediaStore.Video.Thumbnails.getThumbnail(cr, id, MediaStore.Video.Thumbnails.MINI_KIND, null);
+        }
+        return thumbnail;
     }
 
     private Bitmap getImageThumbnail(String path) {

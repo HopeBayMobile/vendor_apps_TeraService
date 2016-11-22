@@ -17,10 +17,13 @@
         <receiver
             android:name="com.hopebaytech.teraservice.receiver.TeraReceiver"
             android:enabled="true"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.teraservice.create.thumbnail" />
             </intent-filter>
         </receiver>
 
