@@ -12,6 +12,7 @@ import com.hopebaytech.teraservice.info.HCFSEvent;
 import com.hopebaytech.teraservice.info.TeraIntent;
 import com.hopebaytech.teraservice.utils.Logs;
 import com.hopebaytech.teraservice.utils.ThumbnailApiUtils;
+import com.hopebaytech.teraservice.receiver.TeraReceiver;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,8 @@ public class TeraApiServer extends Service {
     public static String SOCKET_ADDRESS = "mgmt.api.sock";
     private boolean stopped = false;
     private ExecutorService pool = Executors.newFixedThreadPool(5);
+    public final static int image = 0;
+    public final static int video = 1;
 
     @Override
     public void onCreate() {
@@ -43,8 +46,16 @@ public class TeraApiServer extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Logs.d(CLASSNAME, "onStartCommand", null);
+        final String action = intent.getAction();
 
-        new SocketListener().start();
+        if (action!=null && action.equals(TeraReceiver.CREATE_THUMBNAIL_ACTION)) {
+            long id = intent.getLongExtra("id", -1);
+            int type = intent.getIntExtra("type", 0);
+            if (id >= 0)
+                new ThumbnailApiUtils().getThumbnail(TeraApiServer.this.getApplicationContext(), id, type);
+        } else {
+            new SocketListener().start();
+        }
 
         return START_STICKY;
     }
