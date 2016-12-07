@@ -46,7 +46,9 @@ public class TeraApiServer extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Logs.d(CLASSNAME, "onStartCommand", null);
-        final String action = intent.getAction();
+        String action = null;
+        if (intent != null)
+            action = intent.getAction();
 
         if (action!=null && action.equals(TeraReceiver.CREATE_THUMBNAIL_ACTION)) {
             long id = intent.getLongExtra("id", -1);
